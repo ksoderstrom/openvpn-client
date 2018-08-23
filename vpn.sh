@@ -38,6 +38,7 @@ then
   vpn_port=$(awk '/^remote / && NF ~ /^[0-9]*$/ {print $NF}' /vpn/client.ovpn | grep ^ | head -n 1 || echo 1194)
   iptables -A OUTPUT -p tcp -m tcp --dport $vpn_port -j ACCEPT
   iptables -A OUTPUT -p udp -m udp --dport $vpn_port -j ACCEPT
+  iptables -A INPUT -i tun0 -j ACCEPT
 else
   echo "Not setting up firewall"
 fi
